@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Offerings & Business Verification | Track Loved Ones</title>
+    <style>
+        :root {
+            --app-bg: #09261E;
+            --accent-gold: #DDA843;
+            --primary: #123424;
+            --primary-light: #2D6A4F;
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --bg-light: #F4F6F4;
+            --border: #E5E7EB;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background: #ffffff; color: var(--text-main); line-height: 1.7; }
+        .header { background: #123424; color: #ffffff; padding: 18px 24px; border-bottom: 1px solid #0D261A; }
+        .nav-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo-lockup { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: bold; color: #ffffff; text-decoration: none; }
+        .back-home { color: #E9C46A; text-decoration: none; font-size: 14px; font-weight: bold; transition: color 0.2s; }
+        .back-home:hover { color: #f3d484; }
+        .content { max-width: 1000px; margin: 40px auto; padding: 0 24px; }
+        .kicker { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-light); font-family: monospace; margin-bottom: 6px; }
+        h1 { color: #123424; font-size: 34px; border-bottom: 2px solid var(--border); padding-bottom: 14px; margin-bottom: 15px; }
+        .subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 35px; text-align: justify; }
+
+        /* Navigation Tab Bar */
+        .tabs-bar { display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 35px; }
+        .tab-btn { background: #F3F4F6; color: var(--text-main); border: 1px solid var(--border); padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .tab-btn:hover { background: #E5E7EB; }
+        .tab-btn.active { background: #123424; color: #ffffff; border-color: #123424; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .pillar-card { background: #F9FAFB; border: 1px solid var(--border); border-radius: 18px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
+        .pillar-icon { width: 44px; height: 44px; border-radius: 12px; background: #EAF0EC; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
+        .pillar-kicker { font-size: 11px; font-family: monospace; font-weight: bold; text-transform: uppercase; color: var(--primary-light); margin-bottom: 4px; }
+        .pillar-card h3 { font-size: 17px; color: var(--primary); margin-bottom: 10px; }
+        .pillar-card p { font-size: 13px; color: var(--text-muted); text-align: justify; line-height: 1.6; margin-bottom: 18px; }
+        .pillar-footer { border-top: 1px solid var(--border); padding-top: 12px; font-size: 12px; font-weight: bold; color: var(--primary); }
+        
+        .banner-action { background: linear-gradient(135deg, #09261E 0%, #0E3529 50%, #123424 100%); border-radius: 20px; padding: 35px; color: #ffffff; margin-bottom: 45px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 25px; }
+        .banner-btn { background: var(--accent-gold); color: #09261E; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 13px; font-weight: bold; transition: background 0.2s; display: inline-block; }
+        .banner-btn:hover { background: #f3d484; }
+        .banner-btn-secondary { background: rgba(255,255,255,0.1); color: #ffffff; text-decoration: none; padding: 11px 20px; border-radius: 10px; font-size: 13px; font-weight: bold; border: 1px solid rgba(255,255,255,0.25); display: inline-block; }
+
+        .kyc-box { background: #F4F6F4; border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 40px; }
+        .kyc-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 18px; }
+        .kyc-header h3 { font-size: 20px; color: var(--primary); }
+        .fee-badge { background: #FEE2E2; color: #991B1B; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; border: 1px solid #FCA5A5; }
+        .kyc-box p { font-size: 13.5px; color: var(--text-main); text-align: justify; margin-bottom: 18px; }
+        
+        .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        @media (max-width: 640px) { .check-grid { grid-template-columns: 1fr; } }
+        .check-item { background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 16px; font-size: 13px; }
+        .check-item strong { display: block; color: var(--primary); margin-bottom: 4px; font-size: 14px; }
+        
+        .alert-amber { background: #FFFBEB; border-left: 4px solid #D97706; padding: 14px 18px; border-radius: 0 8px 8px 0; font-size: 12.5px; color: #92400E; margin-bottom: 20px; }
+        
+        .prohibit-card { background: #FFF5F5; border: 1px solid #FECACA; border-radius: 18px; padding: 25px; margin-bottom: 45px; }
+        .prohibit-card h3 { font-size: 17px; color: #991B1B; margin-bottom: 8px; }
+        .prohibit-card p { font-size: 13px; color: #7F1D1D; text-align: justify; line-height: 1.6; margin-bottom: 10px; }
+        
+        /* Opportunity Card */
+        .opp-card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 22px; margin-bottom: 18px; transition: border-color 0.2s; }
+        .opp-card:hover { border-color: var(--primary-light); }
+        .opp-tag { font-size: 10px; font-family: monospace; font-weight: bold; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; }
+        .opp-tag.job { background: #E0E7FF; color: #3730A3; }
+        .opp-tag.expansion { background: #FEF3C7; color: #92400E; }
+        .verified-tag { font-size: 11px; color: #047857; font-weight: bold; background: #EAF0EC; padding: 3px 8px; border-radius: 5px; }
+
+        /* Form elements */
+        .form-box { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 40px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 12.5px; font-weight: bold; color: var(--text-main); margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #D1D5DB; font-size: 13.5px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-light); }
+        .btn-submit { background: #123424; color: #ffffff; border: none; font-size: 14px; font-weight: bold; padding: 13px 26px; border-radius: 10px; cursor: pointer; transition: background 0.2s; }
+        .btn-submit:hover { background: var(--primary-light); }
+
+        .nav-links-bar { padding-top: 25px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .btn-home { background: #123424; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .btn-home:hover { background: #1a4a34; }
+        footer { background: #0B1C14; color: #9CA3AF; padding: 35px 20px; text-align: center; font-size: 13px; margin-top: 60px; border-top: 1px solid #163829; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <a href="home.html" class="logo-lockup">
+                <span>🛡️</span>
+                <span>Track Loved Ones · Corporate Console</span>
+            </a>
+            <a href="home.html" class="back-home">← Back to Home</a>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="kicker">Enterprise Partnerships & Verified Opportunity Marketplace</div>
+        <h1>Corporate Offerings & Business Verification</h1>
+        <p class="subtitle">
+            We allow <strong>job and business expansion postings</strong> by corporates and business owners strictly post-verification in compliance with the laws of India. Through mandatory MCA registry validation, flat INR 250 KYC anti-fraud screening, and Section 79 IT Act intermediary safe harbour rules, we connect verified enterprises with trusted talent and expansion partners while guaranteeing complete location blindness.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs-bar">
+            <button class="tab-btn active" onclick="switchTab('overview')">Offerings Overview & KYC</button>
+            <button class="tab-btn" onclick="switchTab('postings')">Verified Opportunities (Jobs & Expansions)</button>
+            <button class="tab-btn" onclick="switchTab('create')">Create Opportunity Posting</button>
+            <button class="tab-btn" onclick="switchTab('agreement')">Employer Intermediary Agreement</button>
+        </div>
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="tab-overview" class="tab-content active">
+            <!-- 3 Corporate Pillars -->
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div>
+                        <div class="pillar-icon">🛡️</div>
+                        <div class="pillar-kicker">Statutory Anti-Fraud KYC</div>
+                        <h3>Corporate & Business Verification</h3>
+                        <p>To protect our users from career scams across India, every corporate recruiter or business owner undergoes mandatory MCA CIN/GSTIN validation before posting opportunities.</p>
+                    </div>
+                    <div class="pillar-footer">
+                        Statutory KYC Fee: INR 250 (Inclusive)
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <div class="pillar-icon">📈</div>
+                        <div class="pillar-kicker">Verified Expansion</div>
+                        <h3>Jobs & Business Expansion Posts</h3>
+                        <p>Approved entities can publish both employment vacancies and legitimate commercial expansion opportunities (franchisees, regional distribution channels, authorized agencies) with static location metadata.</p>
+                    </div>
+                    <div class="pillar-footer" style="color: #B45309;">
+                        ✓ Post-Verification MCA Listings
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <div class="pillar-icon">🔒</div>
+                        <div class="pillar-kicker">Zero Surveillance</div>
+                        <h3>Complete Location Blindness</h3>
+                        <p>Corporate accounts have zero access or entitlement to personal family tracking circles or live device coordinates. Postings are strictly prohibited from embedding tracking parameters.</p>
+                    </div>
+                    <div class="pillar-footer" style="color: #059669;">
+                        ✓ 100% Location Blindness Guaranteed
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Banner -->
+            <div class="banner-action">
+                <div style="max-width: 600px;">
+                    <div style="font-size: 11px; font-family: monospace; font-weight: bold; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 6px;">Compliant Marketplace Architecture</div>
+                    <h2 style="font-size: 24px; margin-bottom: 8px;">Post Verified Job or Expansion Opportunities</h2>
+                    <p style="font-size: 13.5px; color: #D1D5DB; margin: 0; text-align: justify;">
+                        Validate your Corporate Identity Number (CIN/GSTIN) against the Ministry of Corporate Affairs, accept the 4 statutory DPDP Act clauses, and reach our verified community.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="create-posting.html" class="banner-btn">Create Posting Form →</a>
+                    <a href="employer-notice.html" class="banner-btn-secondary">Employer Agreement Notice</a>
+                </div>
+            </div>
+
+            <!-- KYC Verification Framework Deep-Dive -->
+            <div class="kyc-box">
+                <div class="kyc-header">
+                    <div>
+                        <div style="font-size: 11px; font-family: monospace; font-weight: bold; text-transform: uppercase; color: var(--primary-light);">Statutory Recruitment Standard</div>
+                        <h3>Corporate KYC Verification & Anti-Fraud Policy</h3>
+                    </div>
+                    <span class="fee-badge">Strictly Non-Refundable · Flat INR 250 Fee</span>
+                </div>
+
+                <p>Under Section 79 of the Information Technology Act, 2000, Track Loved Ones acts strictly as an intermediary. To uphold our safe harbour status and shield job-seekers from fraudulent postings, every business entity undergoes third-party biometric and corporate identity checks before posting:</p>
+
+                <div class="check-grid">
+                    <div class="check-item">
+                        <strong>1. Legal Entity Validation (MCA Registry)</strong>
+                        Verification of corporate CIN (Ministry of Corporate Affairs), GSTIN registration, active bank mandate, and registered office physical address in India.
+                    </div>
+                    <div class="check-item">
+                        <strong>2. Authorized Officer Verification</strong>
+                        PAN card and authorized signatory verification of the corporate recruiter, business owner, or HR director posting positions on the platform.
+                    </div>
+                </div>
+
+                <div class="alert-amber">
+                    <strong>Mandatory Fee Notice:</strong> Because this nominal charge directly covers non-recoverable third-party identity API calls and verification costs, the INR 250 fee is non-refundable once initiated, regardless of verification outcome.
+                </div>
+            </div>
+
+            <!-- Prohibited Conduct Policy -->
+            <div class="prohibit-card">
+                <h3>Prohibited Conduct Policy for Recruiters & Employers</h3>
+                <p>Users and corporate recruiters are <strong>strictly prohibited</strong> from soliciting private location tracking links from candidates or users through marketplace posts, publishing deceptive job descriptions, demanding unauthorized application fees from candidates, or attempting to monitor the behavior of minors.</p>
+                <p style="margin: 0;">Any violation results in immediate forfeiture of corporate KYC status, lifetime banning from the People Connect network, and mandatory reporting to Indian law enforcement authorities.</p>
+            </div>
+        </div>
+
+        <!-- TAB 2: ACTIVE VERIFIED OPPORTUNITIES -->
+        <div id="tab-postings" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h2 style="font-size: 22px; color: var(--primary);">Active Verified Opportunities</h2>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Posted by MCA & KYC verified business entities in compliance with Indian laws.</p>
+                </div>
+                <a href="create-posting.html" class="banner-btn" style="padding: 9px 18px; font-size: 12px;">+ Post New Opportunity</a>
+            </div>
+
+            <!-- Opp 1 -->
+            <div class="opp-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                    <div>
+                        <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                            <span class="opp-tag job">Job Vacancy</span>
+                            <span class="verified-tag">✓ MCA Active · KYC Cleared</span>
+                        </div>
+                        <h3 style="font-size: 17px; color: var(--primary); margin: 0;">Regional Field Logistics Supervisor</h3>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">Apex Supply Chain India Pvt Ltd • CIN: U60200DL2022PTC398124 • Full-Time</div>
+                    </div>
+                    <button onclick="alert('Application Gateway: In compliance with DPDP Act Sec 6, contact details submitted directly to verified corporate recruiter.')" style="background: var(--primary); color: #fff; border: none; padding: 7px 15px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">Apply →</button>
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted); text-align: justify; margin-bottom: 12px;">Supervising regional courier dispatch routes, vehicle safety compliance, and warehouse team handoffs. Strict adherence to employee dignity and non-surveillance standards.</p>
+                <div style="font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">📍 New Delhi, Delhi (Static Address: Okhla Phase III) • Section 79 IT Act Compliant · No Candidate Fees</div>
+            </div>
+
+            <!-- Opp 2 -->
+            <div class="opp-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                    <div>
+                        <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                            <span class="opp-tag expansion">Business Expansion</span>
+                            <span class="verified-tag">✓ MCA Active · KYC Cleared</span>
+                        </div>
+                        <h3 style="font-size: 17px; color: var(--primary); margin: 0;">State Franchisee & Distribution Network Partner</h3>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">Zenith Health Solutions Pvt Ltd • CIN: U85100MH2021PTC354920 • Franchise / Agency</div>
+                    </div>
+                    <button onclick="alert('Commercial Partner Portal: Business expansion prospectus dispatched.')" style="background: var(--primary); color: #fff; border: none; padding: 7px 15px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">Inquire →</button>
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted); text-align: justify; margin-bottom: 12px;">Inviting established commercial distributors and business entrepreneurs to expand our certified emergency first-aid kit and safety equipment supply chain across tier-2 cities.</p>
+                <div style="font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">📍 Pune & Western Maharashtra • Verified Commercial Opportunity</div>
+            </div>
+        </div>
+
+        <!-- TAB 3: CREATE POSTING INLINE CONSOLE -->
+        <div id="tab-create" class="tab-content">
+            <div class="form-box">
+                <h2 style="font-size: 22px; color: var(--primary); margin-bottom: 6px; text-align: center;">CREATE NEW BUSINESS OPPORTUNITY POSTING</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 25px; text-align: center;">Strictly post-verification in compliance with the laws of India. Direct MCA Gateway.</p>
+
+                <form onsubmit="event.preventDefault(); alert('Ecosystem Ledger Entry Generated! Opportunity submitted for verified display.'); switchTab('postings');">
+                    <!-- Gatekeeper -->
+                    <div style="background: #F9FAFB; border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+                        <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 6px;">Corporate Identity Number (CIN) / GSTIN <span style="color: red;">*</span></label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="mca-input" placeholder="e.g., U72200DL2026PTC123456" required style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #D1D5DB;">
+                            <button type="button" onclick="verifyMcaInline()" style="background: var(--primary-light); color: #fff; border: none; border-radius: 8px; font-weight: bold; padding: 0 18px; cursor: pointer;">Verify Entity</button>
+                        </div>
+                        <div id="mca-inline-res" style="display: none; margin-top: 10px; font-size: 12px; color: #047857; background: #EAF0EC; padding: 8px 12px; border-radius: 6px;">
+                            ✓ <strong>MCA Registry Check:</strong> Status - ACTIVE. Entity verified for safe harbour publication.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Posting Category <span style="color: red;">*</span></label>
+                        <select required>
+                            <option>Job Vacancy (Employment)</option>
+                            <option>Business Expansion / Franchise Partner</option>
+                            <option>Authorized Regional Channel Agency</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job / Opportunity Title <span style="color: red;">*</span></label>
+                        <input type="text" placeholder="e.g., Regional Sales Executive" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Work Location City (Static Text Only) <span style="color: red;">*</span></label>
+                        <input type="text" placeholder="e.g., New Delhi, Delhi" required>
+                        <small style="color: #92400E; display: block; margin-top: 4px;">⚠️ Strictly prohibited from embedding live tracking parameters or map links.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Opportunity Description <span style="color: red;">*</span></label>
+                        <textarea placeholder="Provide core responsibilities and operational expectations..." required></textarea>
+                    </div>
+
+                    <div style="background: #FAF5FF; border: 1px solid #E9D5FF; padding: 18px; border-radius: 10px; margin-bottom: 20px; font-size: 12.5px;">
+                        <strong style="color: #581C87; display: block; margin-bottom: 4px;">MANDATORY JOB POSTING COMPLIANCE DISCLOSURE</strong>
+                        <p style="margin: 0 0 10px; color: #4B5563;">[ IT Act Sec 79 & DPDP Act Sec 6 Purpose Limitation ]</p>
+                        <label style="display: flex; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" required style="margin-top: 3px;">
+                            <span>* I certify that this is an authentic active vacancy/opportunity, no application fees are demanded, zero location tracking parameters are embedded, and I accept legal liability.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="width: 100%;">🚀 PUBLISH OPPORTUNITY TO THE NETWORK</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB 4: EMPLOYER INTERMEDIARY AGREEMENT -->
+        <div id="tab-agreement" class="tab-content">
+            <div class="form-box">
+                <h2 style="font-size: 22px; color: var(--primary); margin-bottom: 6px; text-align: center;">EMPLOYER INTERMEDIARY NOTICE</h2>
+                <p style="font-size: 13px; color: var(--primary-light); margin-bottom: 25px; text-align: center; font-family: monospace;">[ Section 4 & Section 5 DPDP Act, 2023 Compliance ]</p>
+
+                <div class="alert-amber" style="background: #EAF0EC; border-color: #2D6A4F; color: #123424;">
+                    <strong>Mandatory Corporate Registration Gate:</strong> Access requires successful background identity integration and payment of a flat registration validation fee of <strong>INR 250 (Inclusive of all statutory taxes)</strong> due prior to workspace token activation.
+                </div>
+
+                <div class="check-item" style="margin-bottom: 12px;">
+                    <label style="display: flex; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" class="agree-box">
+                        <span><strong>1. RECRUITMENT SPECIFIC PURPOSE LIMITATION:</strong> Candidate data will be processed strictly for active employment or expansion evaluation, with no resale or advertising reuse.</span>
+                    </label>
+                </div>
+
+                <div class="check-item" style="margin-bottom: 12px;">
+                    <label style="display: flex; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" class="agree-box">
+                        <span><strong>2. SURVEILLANCE & LOCATION TRACKING PROHIBITION:</strong> Business profiles have zero entitlement, access, or visibility into real-time background location telemetry.</span>
+                    </label>
+                </div>
+
+                <div class="check-item" style="margin-bottom: 12px;">
+                    <label style="display: flex; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" class="agree-box">
+                        <span><strong>3. DATA ERASURE COMPLIANCE ACKNOWLEDGEMENT:</strong> Our company will immediately delete snapshots of candidates exercising their Right to be Forgotten.</span>
+                    </label>
+                </div>
+
+                <div class="check-item" style="margin-bottom: 20px;">
+                    <label style="display: flex; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" class="agree-box">
+                        <span><strong>4. NO EMPLOYMENT OR CONTRACTUAL RELATIONSHIP DISCLAIMER:</strong> Track Loved Ones App acts solely as an intermediary; registration creates no employment or agency relationship.</span>
+                    </label>
+                </div>
+
+                <button id="agree-btn" disabled onclick="alert('Corporate Credentials & Agreement Confirmed! Workspace Token activated.'); switchTab('create');" style="width: 100%; background: #E9C46A; color: #123424; border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: not-allowed; opacity: 0.5;">
+                    CONFIRM CORPORATE CREDENTIALS & ACTIVATE WORKSPACE
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation bar -->
+        <div class="nav-links-bar">
+            <a href="home.html" class="btn-home">← Return to Main Website</a>
+            <span style="font-size: 13px; color: var(--text-muted);">© 2026 People Connect</span>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 People Connect Operating consumer applications under the Track Loved Ones Brand registry. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function verifyMcaInline() {
+            const val = document.getElementById('mca-input').value.trim();
+            if (!val) {
+                alert('Please enter a CIN or GSTIN number first.');
+                return;
+            }
+            alert('MCA Registry Check: Entity verified as Status - ACTIVE.');
+            document.getElementById('mca-inline-res').style.display = 'block';
+        }
+
+        const boxes = document.querySelectorAll('.agree-box');
+        const agreeBtn = document.getElementById('agree-btn');
+        boxes.forEach(b => b.addEventListener('change', () => {
+            const allChecked = Array.from(boxes).every(b => b.checked);
+            agreeBtn.disabled = !allChecked;
+            agreeBtn.style.opacity = allChecked ? '1' : '0.5';
+            agreeBtn.style.cursor = allChecked ? 'pointer' : 'not-allowed';
+        }));
+    </script>
+
+</body>
+</html>

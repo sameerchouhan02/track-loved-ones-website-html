@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Loved Ones - Always connect with your world</title>
+    <meta name="description" content="Secure, consent-driven location sharing with automated 24-hour permission expiry, zero data commodification, and constitutional privacy safeguards." />
+    <style>
+        :root {
+            --app-bg: #09261E;
+            --accent-gold: #DDA843;
+            --accent-gold-hover: #E9C46A;
+            --primary: #123424;
+            --primary-light: #2D6A4F;
+            --primary-border: #1B4D36;
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --bg-light: #F4F6F4;
+            --border: #E5E7EB;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background: #ffffff; color: var(--text-main); line-height: 1.6; }
+
+        /* Top Bar */
+        .top-banner { background: #061A14; color: #D1D5DB; font-size: 11.5px; padding: 7px 16px; border-bottom: 1px solid #163829; text-align: center; }
+        .top-banner a { color: var(--accent-gold); text-decoration: none; font-weight: bold; margin-left: 8px; }
+
+        /* Header Navigation */
+        .header { background: #09261E; color: #ffffff; padding: 14px 24px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1B4D36; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .nav-wrap { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .brand-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #ffffff; }
+        .brand-logo { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
+        .brand-text { display: flex; flex-direction: column; }
+        .brand-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.1; color: #ffffff; }
+        .brand-tagline { font-size: 11px; color: #9CA3AF; letter-spacing: 0.2px; }
+
+        .nav-menu { display: flex; align-items: center; gap: 20px; list-style: none; }
+        .nav-menu a { color: #D1D5DB; text-decoration: none; font-size: 13.5px; font-weight: 500; transition: color 0.2s; }
+        .nav-menu a:hover { color: var(--accent-gold); }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: #0E3529; min-width: 230px; box-shadow: 0px 8px 24px rgba(0,0,0,0.3); border: 1px solid #1B4D36; border-radius: 12px; padding: 8px 0; z-index: 101; }
+        .dropdown-content a { color: #E5E7EB; padding: 10px 18px; text-decoration: none; display: block; font-size: 13px; transition: background 0.2s; }
+        .dropdown-content a:hover { background-color: #123424; color: var(--accent-gold); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .btn-signin { background: var(--accent-gold); color: #09261E; border: none; font-size: 13px; font-weight: 700; padding: 9px 18px; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
+        .btn-signin:hover { background: var(--accent-gold-hover); transform: translateY(-1px); }
+
+        /* Hero Section */
+        .hero-section { background: linear-gradient(180deg, #09261E 0%, #0E3529 100%); color: #ffffff; padding: 60px 24px 80px; position: relative; overflow: hidden; }
+        .hero-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+        @media (max-width: 900px) { .hero-container { grid-template-columns: 1fr; text-align: center; } .nav-menu { display: none; } }
+        
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(221, 168, 67, 0.15); border: 1px solid rgba(221, 168, 67, 0.4); color: var(--accent-gold); font-size: 12px; font-weight: 700; font-family: monospace; text-transform: uppercase; padding: 6px 14px; border-radius: 30px; margin-bottom: 20px; }
+        .hero-title { font-size: 46px; font-weight: 900; line-height: 1.15; letter-spacing: -1px; margin-bottom: 18px; color: #ffffff; }
+        .hero-subtitle { font-size: 17px; color: #CBD5E1; line-height: 1.7; margin-bottom: 30px; text-align: justify; }
+        
+        .hero-pills { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 35px; }
+        .pill { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 10px; font-size: 12.5px; color: #E2E8F0; display: flex; align-items: center; gap: 8px; }
+        .pill span.check { color: var(--accent-gold); font-weight: bold; }
+        
+        .hero-cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+        .btn-gold-lg { background: var(--accent-gold); color: #09261E; text-decoration: none; font-size: 14px; font-weight: 800; padding: 14px 28px; border-radius: 12px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(221, 168, 67, 0.3); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: none; }
+        .btn-gold-lg:hover { background: var(--accent-gold-hover); transform: translateY(-2px); }
+        .btn-outline-lg { border: 1px solid rgba(255,255,255,0.3); color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 13px 24px; border-radius: 12px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-outline-lg:hover { background: rgba(255,255,255,0.1); border-color: #ffffff; }
+
+        .phone-mockup-wrap { position: relative; display: flex; justify-content: center; }
+        .phone-img { width: 100%; max-width: 320px; border-radius: 36px; box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1); transition: transform 0.3s; cursor: pointer; }
+        .phone-img:hover { transform: scale(1.02); }
+        .floating-badge { position: absolute; bottom: 20px; background: #061A14; border: 1px solid var(--accent-gold); color: #ffffff; padding: 10px 18px; border-radius: 16px; font-size: 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+
+        /* Section Layouts */
+        .section-wrap { max-width: 1100px; margin: 0 auto; padding: 70px 24px; }
+        .sec-kicker { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-light); font-family: monospace; margin-bottom: 8px; }
+        .sec-title { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+        .sec-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 40px; }
+
+        /* About Our Ecosystem Section */
+        .ecosystem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: stretch; margin-bottom: 40px; }
+        @media (max-width: 768px) { .ecosystem-grid { grid-template-columns: 1fr; } }
+        .eco-card-main { background: #F4F6F4; border: 1px solid var(--border); border-radius: 24px; padding: 35px; }
+        .eco-card-main h3 { font-size: 22px; color: var(--primary); margin-bottom: 16px; }
+        .eco-card-main p { font-size: 14.5px; color: var(--text-main); line-height: 1.8; text-align: justify; margin-bottom: 20px; }
+        .eco-card-highlight { background: linear-gradient(135deg, #09261E 0%, #123424 100%); color: #ffffff; border-radius: 24px; padding: 35px; }
+        .eco-card-highlight h3 { font-size: 20px; color: var(--accent-gold); margin-bottom: 16px; }
+        .eco-card-highlight p { font-size: 14px; color: #E5E7EB; line-height: 1.8; text-align: justify; margin-bottom: 20px; }
+
+        /* Privacy Guarantee 3 Cards */
+        .guarantee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; margin-bottom: 50px; }
+        .g-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; }
+        .g-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.06); border-color: var(--primary-light); }
+        .g-icon { width: 50px; height: 50px; border-radius: 14px; background: #EAF0EC; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
+        .g-card h4 { font-size: 17px; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+        .g-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; text-align: justify; margin-bottom: 18px; }
+        .g-tag { font-size: 11.5px; font-weight: 700; font-family: monospace; color: var(--primary-light); background: #EAF0EC; padding: 4px 10px; border-radius: 6px; align-self: flex-start; }
+
+        /* Interactive 24-Hour Expiry Simulator */
+        .simulator-box { background: #0E3529; border: 1px solid #1B4D36; border-radius: 24px; padding: 35px; color: #ffffff; margin-bottom: 50px; }
+        .sim-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid #1B4D36; padding-bottom: 18px; margin-bottom: 24px; }
+        .sim-title { font-size: 18px; font-weight: 700; color: #ffffff; }
+        .timer-display { font-family: monospace; font-size: 28px; font-weight: 800; color: var(--accent-gold); background: #061A14; padding: 8px 18px; border-radius: 12px; border: 1px solid #1B4D36; }
+        .sim-progress-bar { width: 100%; height: 8px; background: #123424; border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
+        .sim-progress-fill { height: 100%; width: 68%; background: linear-gradient(90deg, #10B981, var(--accent-gold)); transition: width 0.3s; }
+        .sim-controls { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-sim { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-sim:hover { background: rgba(255,255,255,0.2); }
+        .btn-sim.primary { background: var(--accent-gold); color: #09261E; border: none; font-weight: 700; }
+
+        /* Geofence Safe Zones Simulator */
+        .zones-box { background: #F9FAFB; border: 1px solid var(--border); border-radius: 24px; padding: 35px; margin-bottom: 50px; }
+        .slider-wrap { margin: 25px 0; }
+        .slider-wrap input[type=range] { width: 100%; accent-color: var(--primary-light); cursor: pointer; }
+        .zone-preview { background: #ffffff; border: 1px dashed var(--primary-light); border-radius: 16px; padding: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
+
+        /* Emergency SOS Simulator */
+        .sos-box { background: #FFF5F5; border: 1px solid #FCA5A5; border-radius: 24px; padding: 35px; margin-bottom: 50px; }
+        .sos-btn { width: 100px; height: 100px; border-radius: 50%; background: #DC2626; color: #ffffff; border: 6px solid #FEE2E2; font-size: 18px; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4); }
+        .sos-btn:hover { transform: scale(1.05); background: #b91c1c; }
+
+        /* Statutory Hub - 7 Cards */
+        .statutory-section { background: #F4F6F4; padding: 70px 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .hub-card { background: #ffffff; border: 1px solid var(--border); border-radius: 18px; padding: 24px; text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; }
+        .hub-card:hover { transform: translateY(-3px); border-color: var(--primary-light); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .hub-icon { font-size: 26px; margin-bottom: 12px; }
+        .hub-card h4 { font-size: 16px; color: var(--primary); margin-bottom: 6px; font-weight: 700; }
+        .hub-card p { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+        .hub-link-text { font-size: 12px; font-weight: 700; color: var(--primary-light); display: flex; align-items: center; gap: 4px; }
+
+        /* FAQ Accordion */
+        .faq-item { background: #ffffff; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
+        .faq-question { padding: 18px 22px; font-size: 15px; font-weight: 700; color: var(--primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        .faq-answer { padding: 0 22px 18px; font-size: 13.5px; color: var(--text-muted); line-height: 1.7; display: none; text-align: justify; }
+
+        /* Footer */
+        .footer { background: #061A14; color: #9CA3AF; padding: 60px 24px 30px; border-top: 1px solid #163829; font-size: 13px; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
+        .footer-col h5 { color: #ffffff; font-size: 14px; margin-bottom: 16px; font-weight: 700; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #9CA3AF; text-decoration: none; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--accent-gold); }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 25px; border-top: 1px solid #163829; text-align: center; font-size: 12px; }
+
+        /* Sign-in Modal */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-card { background: #09261E; border: 1px solid #1B4D36; border-radius: 28px; width: 100%; max-width: 380px; padding: 35px 28px; color: #ffffff; box-shadow: 0 25px 60px rgba(0,0,0,0.6); position: relative; }
+        .modal-close { position: absolute; top: 16px; right: 18px; color: #9CA3AF; background: none; border: none; font-size: 20px; cursor: pointer; }
+        .modal-close:hover { color: #ffffff; }
+        .modal-logo { width: 50px; height: 50px; margin: 0 auto 12px; display: block; }
+        .modal-title { font-size: 22px; font-weight: 800; text-align: center; color: #ffffff; margin-bottom: 4px; }
+        .modal-tag { font-size: 12px; color: #9CA3AF; text-align: center; margin-bottom: 24px; }
+        .modal-input { width: 100%; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; font-size: 14px; margin-bottom: 14px; }
+        .modal-input:focus { outline: none; border-color: var(--accent-gold); }
+        .modal-submit { width: 100%; background: var(--accent-gold); color: #09261E; border: none; font-size: 14px; font-weight: 800; padding: 13px; border-radius: 12px; cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+        .modal-submit:hover { background: var(--accent-gold-hover); }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Top Banner -->
+    <div class="top-banner">
+        <span>🇮🇳 Strict Compliance with Digital Personal Data Protection Act, 2023 · Physical in-house Indian servers</span>
+        <a href="privacy-policy.html">Read Statutory Transparency →</a>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="nav-wrap">
+            <a href="home.html" class="brand-link">
+                <img src="assets/aistudio/logo_d22c4c79.png" alt="Track Loved Ones Shield Logo" class="brand-logo" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <span class="brand-title">Track Loved Ones</span>
+                    <span class="brand-tagline">Always connect with your world</span>
+                </div>
+            </a>
+
+            <ul class="nav-menu">
+                <li><a href="#about">About Ecosystem</a></li>
+                <li><a href="#privacy-guarantee">Privacy Guarantee</a></li>
+                <li><a href="#safe-zones">Safe Zones</a></li>
+                <li><a href="#emergency-sos">Emergency SOS</a></li>
+                <li><a href="legal-education.html">Legal Education</a></li>
+                <li><a href="corporate-offerings.html">Corporate Offerings</a></li>
+                <li><a href="vision-mission-values.html">Vision & Values</a></li>
+                <li class="dropdown">
+                    <a href="#legal">Legal Policies ▾</a>
+                    <div class="dropdown-content">
+                        <a href="disclaimer.html">Disclaimer Notice</a>
+                        <a href="privacy-policy.html">Privacy Policy & DPDP 2023</a>
+                        <a href="refunds-cancellation.html">Refunds & KYC Cancellation</a>
+                        <a href="terms-of-use.html">Terms of Use</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="track-loved-ones-website-html.zip" download="track-loved-ones-website-html.zip" style="border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 9px; text-decoration: none; transition: all 0.2s;" title="Download all HTML pages in a single ZIP folder">
+                    ↓ Download HTML ZIP
+                </a>
+                <button onclick="openModal()" class="btn-signin">Sign In to Circle</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div>
+                <div class="hero-badge">
+                    <span>🛡️</span>
+                    <span>100% Free · Funded by Citizen Legal Education</span>
+                </div>
+                <h1 class="hero-title">
+                    Real-Time Family Safety. <br>
+                    <span style="color: var(--accent-gold);">Zero Surveillance Guilt.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Always connect with your world through verified peer-to-peer location matching. Protected by our automated 24-hour permission expiry standard, so family sharing remains a conscious, mutual daily choice.
+                </p>
+
+                <div class="hero-pills">
+                    <div class="pill"><span class="check">✓</span> Automated 24h Permission Expiry</div>
+                    <div class="pill"><span class="check">✓</span> Zero Location Database Logs</div>
+                    <div class="pill"><span class="check">✓</span> Domestic Sovereign Servers</div>
+                    <div class="pill"><span class="check">✓</span> 1-Tap SOS Dispatch</div>
+                </div>
+
+                <div class="hero-cta-row">
+                    <button onclick="openModal()" class="btn-gold-lg">
+                        <span>Sign In to Circle</span>
+                        <span>→</span>
+                    </button>
+                    <a href="track-loved-ones-website-html.zip" download="track-loved-ones-website-html.zip" class="btn-gold-lg" style="background: rgba(221, 168, 67, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold);" title="Download full HTML package as a ZIP archive">
+                        <span>↓ Download All HTML Files (.ZIP)</span>
+                    </a>
+                    <a href="#about" class="btn-outline-lg">
+                        <span>Explore Ecosystem</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Phone Screenshot side container -->
+            <div class="phone-mockup-wrap">
+                <img 
+                    src="assets/aistudio/track_loved_ones_screen_ef7967f9.png" 
+                    alt="Track Loved Ones Mobile Application Interface"
+                    class="phone-img"
+                    onclick="openModal()"
+                    title="Click to preview mobile sign in"
+                >
+                <div class="floating-badge">
+                    <span style="color: var(--accent-gold); font-size: 16px;">🔒</span>
+                    <span><strong>End-to-End Encrypted</strong> Telemetry</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Our Ecosystem Section -->
+    <section id="about" class="section-wrap">
+        <div class="sec-kicker">Transparent Operational Blueprint</div>
+        <h2 class="sec-title">About Our Ecosystem</h2>
+        <p class="sec-sub">Engineered to balance unconditional family care with uncompromised human dignity.</p>
+
+        <div class="ecosystem-grid">
+            <div class="eco-card-main">
+                <h3>Built for Family Protection, Not Data Mining</h3>
+                <p>Track Loved Ones was founded on a simple truth: you shouldn't have to surrender your family's personal whereabouts to advertising cartels just to ensure your child arrived safely at school or your elderly parents reached home.</p>
+                <p>We eliminated persistent tracking databases. In our ecosystem, coordinates flow directly in encrypted volatile memory and dissolve the moment the mutual session concludes. No location history is ever archived or monetized.</p>
+                <div style="font-size: 13px; font-weight: bold; color: var(--primary-light);">
+                    ✓ DPDP Act 2023 Compliant · Zero-History Architecture
+                </div>
+            </div>
+
+            <div class="eco-card-highlight">
+                <div style="font-size: 11px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 6px;">Ethical Business Model</div>
+                <h3>Funded by Public Legal Literacy</h3>
+                <p>Unlike conventional tracking apps that silently bundle GPS histories into hedge fund datasets, our domestic operations are funded ethically through our daily legal education video channel on YouTube.</p>
+                <p>Every single day, we break down an Indian legal statute section-by-section for ordinary citizens. The monetization from this public service sustains our entire server footprint, keeping our family app 100% free forever.</p>
+                <a href="legal-education.html" style="color: var(--accent-gold); font-size: 13px; font-weight: bold; text-decoration: none;">Learn About Our YouTube Legal Series →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy & Convenience Guarantee -->
+    <section id="privacy-guarantee" style="background: #F9FAFB; padding: 70px 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <div class="sec-kicker">Statutory Commitments</div>
+            <h2 class="sec-title">PRIVACY & CONVENIENCE GUARANTEE</h2>
+            <p class="sec-sub">Three non-negotiable promises that safeguard your digital liberty every single day.</p>
+
+            <div class="guarantee-grid">
+                <!-- Guarantee 1 -->
+                <div class="g-card">
+                    <div>
+                        <div class="g-icon">⏱️</div>
+                        <h4>Automated 24-Hour Permission Expiry</h4>
+                        <p>For your complete privacy, all tracking permissions automatically expire after 24 hours. A fresh request must be sent and accepted every day to resume sharing. We believe continuous tracking should always be a conscious choice.</p>
+                    </div>
+                    <span class="g-tag">Active Expiry Standard</span>
+                </div>
+
+                <!-- Guarantee 2 -->
+                <div class="g-card">
+                    <div>
+                        <div class="g-icon">📶</div>
+                        <h4>Convenience Only Tracking Matching</h4>
+                        <p>To keep you and your loved ones in sync with maximum ease, we match tracking requests when both people are using the same network. This ensures fast, reliable, and convenient connection without complicated setup.</p>
+                    </div>
+                    <span class="g-tag">Smart Local Matching</span>
+                </div>
+
+                <!-- Guarantee 3 -->
+                <div class="g-card">
+                    <div>
+                        <div class="g-icon">⚖️</div>
+                        <h4>YouTube Channel Service Monetization</h4>
+                        <p>We provide general knowledge about Indian laws, Section wise of all prevailing acts which are of interest to general public. We publish one video on daily basis on our YouTube channel and all the monetization for providing you the services are realized from there.</p>
+                    </div>
+                    <span class="g-tag">Educational Funding</span>
+                </div>
+            </div>
+
+            <!-- Interactive 24-Hour Permission Expiry Simulator -->
+            <div class="simulator-box">
+                <div class="sim-header">
+                    <div>
+                        <div style="font-size: 11px; font-family: monospace; font-weight: bold; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 4px;">Live Simulator</div>
+                        <div class="sim-title">Automated Permission Expiry Engine</div>
+                    </div>
+                    <div class="timer-display" id="expiry-timer">14:28:45</div>
+                </div>
+
+                <div class="sim-progress-bar">
+                    <div class="sim-progress-fill" id="timer-bar"></div>
+                </div>
+
+                <p style="font-size: 13.5px; color: #CBD5E1; margin-bottom: 20px; line-height: 1.6;">
+                    When this clock strikes <strong>00:00:00</strong>, all location relay channels sever automatically. No background GPS runs. No lingering access exists until your loved one consciously grants a fresh 24-hour token.
+                </p>
+
+                <div class="sim-controls">
+                    <button class="btn-sim primary" onclick="resetTimer()">Grant Fresh 24-Hour Consent (Reset)</button>
+                    <button class="btn-sim" onclick="expireNow()">Trigger Immediate Expiry (Revoke)</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Safe Zones Feature Demo -->
+    <section id="safe-zones" class="section-wrap">
+        <div class="sec-kicker">Geofence Intelligence</div>
+        <h2 class="sec-title">Smart Safe Zones & Geo-Arrival Alerts</h2>
+        <p class="sec-sub">Define trusted boundaries like School, Home, or Office. Receive instant push notifications without battery drain.</p>
+
+        <div class="zones-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                <h3 style="font-size: 18px; color: var(--primary);">Adjust Safe Zone Radius</h3>
+                <span style="font-size: 14px; font-weight: bold; color: var(--primary-light);" id="radius-val">300 meters</span>
+            </div>
+
+            <div class="slider-wrap">
+                <input type="range" min="100" max="1000" step="50" value="300" id="radius-slider" oninput="updateRadius(this.value)">
+            </div>
+
+            <div class="zone-preview">
+                <div>
+                    <strong style="color: var(--primary); font-size: 14px;">📍 St. Mary's High School (Safe Zone Active)</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0;">Automated push notification sent to Mom and Dad when Aryan departs boundary.</p>
+                </div>
+                <button onclick="testNotification()" style="background: var(--primary); color: #ffffff; border: none; padding: 9px 16px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">
+                    Simulate Zone Departure Push →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency SOS Feature Demo -->
+    <section id="emergency-sos" class="section-wrap" style="padding-top: 0;">
+        <div class="sec-kicker">Distress Protocol</div>
+        <h2 class="sec-title">Emergency SOS & Silent Alarm</h2>
+        <p class="sec-sub">In critical distress, one long press overrides silent mode on responders' phones and shares immediate coordinates.</p>
+
+        <div class="sos-box">
+            <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                <button class="sos-btn" id="sos-btn" onclick="triggerSOS()">SOS</button>
+                <div style="flex: 1; min-width: 260px;">
+                    <h3 style="color: #991B1B; font-size: 18px; margin-bottom: 6px;" id="sos-status-title">Ready for Emergency Dispatch</h3>
+                    <p style="font-size: 13px; color: #7F1D1D; line-height: 1.6; margin-bottom: 12px;" id="sos-status-desc">
+                        Press the red button to simulate a 5-second countdown panic alert with emergency contact notification and turn-by-turn responder navigation.
+                    </p>
+                    <div id="sos-countdown" style="display: none; font-size: 14px; font-weight: bold; color: #DC2626; font-family: monospace;">
+                        Dispatching telemetry in <span id="countdown-num">5</span>s... <button onclick="cancelSOS()" style="background: #ffffff; border: 1px solid #DC2626; color: #DC2626; padding: 3px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; margin-left: 8px;">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complete Statutory Hub (7 HTML Pages) -->
+    <section id="legal" class="statutory-section">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="sec-kicker">Comprehensive Legal Center</div>
+            <h2 class="sec-title">Company Foundations & Statutory Policies</h2>
+            <p class="sec-sub">Direct access to all governing charters, legal disclosures, citizen curriculum, and enterprise frameworks:</p>
+
+            <div class="hub-grid">
+                <!-- 1. Vision, Mission & Values -->
+                <a href="vision-mission-values.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">🌱</div>
+                        <h4>Vision, Mission & Values</h4>
+                        <p>Our long-term aspirations, human dignity philosophy, and the 6 non-negotiable core values.</p>
+                    </div>
+                    <span class="hub-link-text">Read Charter →</span>
+                </a>
+
+                <!-- 2. Legal Education -->
+                <a href="legal-education.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">⚖️</div>
+                        <h4>Citizen Legal Education</h4>
+                        <p>Section-by-section breakdown of DPDP Act 2023, BNS, IT Act, MV Act, and our YouTube model.</p>
+                    </div>
+                    <span class="hub-link-text">Explore Curriculum →</span>
+                </a>
+
+                <!-- 3. Corporate Offerings -->
+                <a href="corporate-offerings.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">🏢</div>
+                        <h4>Corporate Offerings</h4>
+                        <p>Mandatory recruiter KYC (INR 250 fee), DPDPA fiduciary shift, and workforce field safety circles.</p>
+                    </div>
+                    <span class="hub-link-text">Enterprise Portal →</span>
+                </a>
+
+                <!-- 4. Disclaimer Notice -->
+                <a href="disclaimer.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">⚠️</div>
+                        <h4>Disclaimer Notice</h4>
+                        <p>Emergency assistance boundaries, telecom signal dependencies, and non-liability terms.</p>
+                    </div>
+                    <span class="hub-link-text">View Disclaimer →</span>
+                </a>
+
+                <!-- 5. Privacy Policy -->
+                <a href="privacy-policy.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">🔒</div>
+                        <h4>Privacy Policy & DPDP 2023</h4>
+                        <p>Full statutory transparency, zero-location storage proof, and grievance redressal contacts.</p>
+                    </div>
+                    <span class="hub-link-text">Read Privacy Policy →</span>
+                </a>
+
+                <!-- 6. Refunds & Cancellation -->
+                <a href="refunds-cancellation.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">💳</div>
+                        <h4>Refunds & Cancellation</h4>
+                        <p>INR 250 Recruiter KYC fee policy, non-refundable third-party check terms, and appeal windows.</p>
+                    </div>
+                    <span class="hub-link-text">Read Refund Terms →</span>
+                </a>
+
+                <!-- 7. Terms of Use -->
+                <a href="terms-of-use.html" class="hub-card">
+                    <div>
+                        <div class="hub-icon">📜</div>
+                        <h4>Terms of Use</h4>
+                        <p>Section 79 IT Act intermediary protections, acceptable use, and minor safety prohibitions.</p>
+                    </div>
+                    <span class="hub-link-text">Read Terms of Use →</span>
+                </a>
+
+                <!-- 8. Complete HTML ZIP Archive -->
+                <a href="track-loved-ones-website-html.zip" download="track-loved-ones-website-html.zip" class="hub-card" style="border: 2px solid var(--accent-gold); background: #FFFDF5;">
+                    <div>
+                        <div class="hub-icon">📦</div>
+                        <h4 style="color: #92400E;">Download All HTML (.ZIP)</h4>
+                        <p>Get all 8 standalone HTML files, stylesheets, and assets bundled together in one offline ZIP folder.</p>
+                    </div>
+                    <span class="hub-link-text" style="color: #B45309; font-weight: 800;">↓ Download ZIP Archive →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-wrap">
+        <div class="sec-kicker">Common Questions</div>
+        <h2 class="sec-title">Frequently Asked Questions</h2>
+        <p class="sec-sub">Clear answers regarding privacy, 24-hour expiry, battery consumption, and our educational business model.</p>
+
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Why does tracking permission automatically expire after 24 hours?</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    We believe continuous, perpetual tracking should never become an unmonitored default. Requiring a fresh mutual connection request every 24 hours guarantees that both individuals remain fully conscious of and in agreement with location sharing, honoring constitutional privacy norms.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How is the Track Loved Ones app funded if it is completely free?</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    We do not sell personal data, display intrusive ads, or charge monthly subscription fees to families. Instead, our operational and server infrastructure is fully funded through the monetization of our daily educational YouTube video series covering Indian legal acts and citizen rights section-by-section.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do you store my location coordinates on your servers?</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    No. Our architecture uses Zero-Location-Storage. Coordinates are processed transiently in volatile system memory solely for real-time peer-to-peer relay. Once delivered to your family member's screen, the telemetry is discarded and never written to hard drives.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is Convenience Only Tracking Matching?</span>
+                    <span>▾</span>
+                </div>
+                <div class="faq-answer">
+                    When both you and your loved ones are on the same local Wi-Fi or mobile network gateway, the app initiates fast, zero-configuration local peer matching. This enables immediate connectivity without tedious multi-step pairing rituals.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign-in Modal -->
+    <div class="modal-overlay" id="login-modal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <img src="assets/aistudio/logo_d22c4c79.png" alt="Shield Logo" class="modal-logo" onerror="this.style.display='none'">
+            <h3 class="modal-title">TrackLovedOnes</h3>
+            <p class="modal-tag">Always connect with your world</p>
+
+            <form onsubmit="handleModalSubmit(event)">
+                <input type="email" placeholder="Email Address" required class="modal-input" value="family@tracklovedones.in">
+                <input type="password" placeholder="Password" required class="modal-input" value="••••••••••••">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #9CA3AF; margin-bottom: 16px;">
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--accent-gold);">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" style="color: #CBD5E1; text-decoration: none;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="modal-submit">SIGN IN</button>
+            </form>
+
+            <p style="text-align: center; font-size: 12px; color: #9CA3AF; margin-top: 18px;">
+                Don't have an account? <span style="color: var(--accent-gold); font-weight: bold; cursor: pointer;">Sign Up</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span style="font-size: 22px;">🛡️</span>
+                    <strong style="color: #ffffff; font-size: 16px;">Track Loved Ones</strong>
+                </div>
+                <p style="line-height: 1.7; margin-bottom: 16px; text-align: justify;">
+                    Always connect with your world. Built with strict adherence to Indian privacy laws, automated 24-hour permission expiry, zero location storage, and sovereign domestic servers.
+                </p>
+                <div style="font-size: 12px; color: var(--accent-gold);">
+                    People Connect Technology Ltd. · CIN: U72900DL2024PTC123456
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h5>Platform & Features</h5>
+                <ul>
+                    <li><a href="#about">About Our Ecosystem</a></li>
+                    <li><a href="#privacy-guarantee">Privacy & Convenience Guarantee</a></li>
+                    <li><a href="#safe-zones">Safe Zones Geofencing</a></li>
+                    <li><a href="#emergency-sos">Emergency SOS Distress</a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal()">Circle Web Sign In</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Company & Public Mission</h5>
+                <ul>
+                    <li><a href="vision-mission-values.html">Vision, Mission & Values</a></li>
+                    <li><a href="legal-education.html">Citizen Legal Education</a></li>
+                    <li><a href="corporate-offerings.html">Corporate Offerings & KYC</a></li>
+                    <li><a href="https://www.youtube.com" target="_blank">YouTube Legal Series</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h5>Statutory Legal Center</h5>
+                <ul>
+                    <li><a href="disclaimer.html">Disclaimer Notice</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy (DPDP 2023)</a></li>
+                    <li><a href="refunds-cancellation.html">Refunds & Cancellation (KYC)</a></li>
+                    <li><a href="terms-of-use.html">Terms of Use (IT Act Sec 79)</a></li>
+                    <li><a href="track-loved-ones-website-html.zip" download="track-loved-ones-website-html.zip" style="color: var(--accent-gold); font-weight: bold;">↓ Download All HTML (.ZIP)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 People Connect Technology Ltd. Operating consumer applications under the Track Loved Ones Brand registry. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // 24h Countdown Timer logic
+        let secondsLeft = 14 * 3600 + 28 * 60 + 45;
+        const timerEl = document.getElementById('expiry-timer');
+        const timerBar = document.getElementById('timer-bar');
+
+        function formatTime(s) {
+            const hrs = String(Math.floor(s / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+            const secs = String(s % 60).padStart(2, '0');
+            return `${hrs}:${mins}:${secs}`;
+        }
+
+        setInterval(() => {
+            if (secondsLeft > 0) {
+                secondsLeft--;
+                timerEl.textContent = formatTime(secondsLeft);
+                const pct = (secondsLeft / (24 * 3600)) * 100;
+                timerBar.style.width = pct + '%';
+            } else {
+                timerEl.textContent = 'EXPIRED (00:00:00)';
+                timerEl.style.color = '#EF4444';
+                timerBar.style.width = '0%';
+            }
+        }, 1000);
+
+        function resetTimer() {
+            secondsLeft = 24 * 3600;
+            timerEl.textContent = '24:00:00';
+            timerEl.style.color = 'var(--accent-gold)';
+            timerBar.style.width = '100%';
+            alert('Fresh 24-hour mutual consent token active! Sharing will automatically expire in exactly 24 hours.');
+        }
+
+        function expireNow() {
+            secondsLeft = 0;
+            timerEl.textContent = 'EXPIRED (00:00:00)';
+            timerEl.style.color = '#EF4444';
+            timerBar.style.width = '0%';
+            alert('Location sharing permission immediately revoked! Zero background transmission running.');
+        }
+
+        // Safe Zone Radius Slider
+        function updateRadius(val) {
+            document.getElementById('radius-val').textContent = val + ' meters';
+        }
+
+        function testNotification() {
+            alert('Push Notification Simulation:\n\n🔔 TrackLovedOnes: Aryan just departed "St. Mary\'s High School" Safe Zone (Radius: ' + document.getElementById('radius-val').textContent + '). Battery at 88%.');
+        }
+
+        // Emergency SOS Countdown Simulator
+        let sosCountdownTimer = null;
+        function triggerSOS() {
+            const btn = document.getElementById('sos-btn');
+            const countdownWrap = document.getElementById('sos-countdown');
+            const numEl = document.getElementById('countdown-num');
+            const statusTitle = document.getElementById('sos-status-title');
+            const statusDesc = document.getElementById('sos-status-desc');
+
+            countdownWrap.style.display = 'block';
+            let count = 5;
+            numEl.textContent = count;
+            statusTitle.textContent = 'EMERGENCY BEACON ARMED!';
+            statusDesc.textContent = 'Broadcasting high-priority distress signal to emergency contacts and emergency services.';
+
+            if (sosCountdownTimer) clearInterval(sosCountdownTimer);
+            sosCountdownTimer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    numEl.textContent = count;
+                } else {
+                    clearInterval(sosCountdownTimer);
+                    countdownWrap.style.display = 'none';
+                    statusTitle.textContent = '🚨 DISTRESS SIGNAL DISPATCHED';
+                    statusDesc.textContent = 'Coordinates (28.6139° N, 77.2090° E) sent to 3 primary contacts. Responders\' silent ringers overridden.';
+                    alert('SOS BROADCAST CONFIRMED!\n\nLocation transmitted to Circle Responders with turn-by-turn routing initiated.');
+                }
+            }, 1000);
+        }
+
+        function cancelSOS() {
+            if (sosCountdownTimer) clearInterval(sosCountdownTimer);
+            document.getElementById('sos-countdown').style.display = 'none';
+            document.getElementById('sos-status-title').textContent = 'Ready for Emergency Dispatch';
+            document.getElementById('sos-status-desc').textContent = 'Press the red button to simulate a 5-second countdown panic alert with emergency contact notification.';
+            alert('SOS alert safely cancelled.');
+        }
+
+        // FAQ Toggle Accordion
+        function toggleFaq(el) {
+            const ans = el.nextElementSibling;
+            const isVisible = ans.style.display === 'block';
+            ans.style.display = isVisible ? 'none' : 'block';
+            el.querySelector('span:last-child').textContent = isVisible ? '▾' : '▴';
+        }
+
+        // Modal Open / Close
+        function openModal() {
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'login-modal') {
+                closeModal();
+            }
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            alert('Sign-In Successful! Connecting to your family circle with 24-hour mutual consent token.');
+            closeModal();
+        }
+    </script>
+
+</body>
+</html>
