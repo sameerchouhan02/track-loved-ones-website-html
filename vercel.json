@@ -1,0 +1,25 @@
+{
+  "redirects": [
+    { "source": "/Home.html", "destination": "/", "permanent": true },
+    { "source": "/home.html", "destination": "/", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/c.html", "destination": "/c", "permanent": true },
+    { "source": "/corporate-offerings.html", "destination": "/corporate-offerings", "permanent": true },
+    { "source": "/disclaimer.html", "destination": "/disclaimer", "permanent": true },
+    { "source": "/legal-education.html", "destination": "/legal-education", "permanent": true },
+    { "source": "/privacy-policy.html", "destination": "/privacy-policy", "permanent": true },
+    { "source": "/refunds-cancellation.html", "destination": "/refunds-cancellation", "permanent": true },
+    { "source": "/terms-of-use.html", "destination": "/terms-of-use", "permanent": true },
+    { "source": "/vision-mission-values.html", "destination": "/vision-mission-values", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/c", "destination": "/index.html" },
+    { "source": "/corporate-offerings", "destination": "/index.html" },
+    { "source": "/disclaimer", "destination": "/index.html" },
+    { "source": "/legal-education", "destination": "/index.html" },
+    { "source": "/privacy-policy", "destination": "/index.html" },
+    { "source": "/refunds-cancellation", "destination": "/index.html" },
+    { "source": "/terms-of-use", "destination": "/index.html" },
+    { "source": "/vision-mission-values", "destination": "/index.html" }
+  ]
+}

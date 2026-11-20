@@ -1,0 +1,46 @@
+:root {
+            --app-bg: #09261E;
+            --accent-gold: #DDA843;
+            --primary: #123424;
+            --primary-light: #2D6A4F;
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --bg-light: #F4F6F4;
+            --border: #E5E7EB;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background: #ffffff; color: var(--text-main); line-height: 1.7; }
+        .header { background: #123424; color: #ffffff; padding: 18px 24px; border-bottom: 1px solid #0D261A; }
+        .nav-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo-lockup { display: flex; align-items: center; gap: 12px; color: #ffffff; text-decoration: none; }
+        .logo-img { height: 42px; width: auto; display: block; }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+        .logo-name { font-size: 19px; font-weight: bold; letter-spacing: 0.2px; }
+        .logo-tagline { font-size: 11px; font-weight: normal; color: #E9C46A; }
+        .back-home { color: #E9C46A; text-decoration: none; font-size: 14px; font-weight: bold; transition: color 0.2s; }
+        .back-home:hover { color: #f3d484; }
+        .content { max-width: 1000px; margin: 40px auto; padding: 0 24px; }
+        .kicker { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #DC2626; font-family: monospace; margin-bottom: 6px; }
+        h1 { color: #123424; font-size: 34px; border-bottom: 2px solid var(--border); padding-bottom: 14px; margin-bottom: 15px; }
+        .subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 35px; }
+        
+        .hero-banner { background: linear-gradient(135deg, #09261E 0%, #0E3529 50%, #123424 100%); border-radius: 20px; padding: 35px; color: #ffffff; margin-bottom: 45px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .banner-kicker { font-size: 11px; text-transform: uppercase; font-family: monospace; letter-spacing: 1px; font-weight: bold; color: var(--accent-gold); margin-bottom: 8px; }
+        .hero-banner h2 { font-size: 24px; margin-bottom: 12px; }
+        .hero-banner p { font-size: 14px; line-height: 1.7; color: #EAF0EC; margin-bottom: 22px; text-align: justify; }
+        .yt-btn { display: inline-flex; align-items: center; gap: 8px; background: #DC2626; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: bold; padding: 12px 22px; border-radius: 10px; transition: background 0.2s; }
+        .yt-btn:hover { background: #b91c1c; }
+        
+        .belief-box { background: #F4F6F4; border: 1px solid var(--border); border-left: 5px solid var(--accent-gold); border-radius: 16px; padding: 30px 28px; margin-bottom: 10px; display: flex; align-items: center; gap: 20px; }
+        .belief-icon { font-size: 34px; line-height: 1; flex-shrink: 0; }
+        .belief-text { font-size: 20px; font-weight: 600; color: var(--primary); line-height: 1.5; }
+        @media (max-width: 600px) { .belief-box { flex-direction: column; align-items: flex-start; padding: 24px 20px; } .belief-text { font-size: 18px; } }
+
+        .disclaimer-box { background: #FFF5F5; border-left: 4px solid #DC2626; padding: 20px; border-radius: 0 10px 10px 0; margin: 40px 0; }
+        .disclaimer-box h4 { font-size: 15px; color: #991B1B; margin-bottom: 6px; }
+        .disclaimer-box p { font-size: 13px; color: #7F1D1D; line-height: 1.6; text-align: justify; }
+
+        .nav-links-bar { padding-top: 25px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .btn-home { background: #123424; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .btn-home:hover { background: #1a4a34; }
+        footer { background: #0B1C14; color: #9CA3AF; padding: 35px 20px; text-align: center; font-size: 13px; margin-top: 60px; border-top: 1px solid #163829; }
