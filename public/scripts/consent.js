@@ -1361,7 +1361,7 @@ PART 6: 🏢 DATA FIDUCIARY & GRIEVANCE REDRESSAL OFFICER
                     });
 
                     const data = await res.json();
-                    if (data.success) {
+                    if (data.parentApproved === true || (data.data && data.data.parentApproved === true)) {
                         closeDeclarationModal();
                         document.getElementById('dialogContainer').style.display = 'none';
                         const successCard = document.getElementById('successContainer');
